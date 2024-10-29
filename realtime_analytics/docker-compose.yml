@@ -1,0 +1,54 @@
+#version: '3.8'
+services:
+  msgen:
+    build:
+      context: msgen/.
+    environment:
+      MSGEN_RANDOM_MIN: ${MSGEN_RANDOM_MIN}
+      MSGEN_RANDOM_MAX: ${MSGEN_RANDOM_MAX}
+
+  flink_job:
+    build:
+      context: flink/.
+    environment:
+      MSGEN_RANDOM_MIN: ${MSGEN_RANDOM_MIN}
+      MSGEN_RANDOM_MAX: ${MSGEN_RANDOM_MAX}
+    depends_on: 
+      - jobmanager
+  #redis:
+  #  image: redis:6.2-alpine
+  #  restart: always
+  #  ports:
+  #    - '6379:6379'
+  #  command: redis-server --save 20 1 --loglevel warning 
+  #  volumes: 
+  #    - cache:/data
+  jobmanager:
+    image: flink
+    expose:
+      - "6123"
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    volumes:
+      - ./:/app
+
+  taskmanager:
+    image: flink
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+    volumes:
+      - ./:/app
+volumes:
+  cache:
+    driver: local

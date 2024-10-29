@@ -9,8 +9,8 @@ COPY /src .
 
 #upgrade pip 
 RUN pip install --upgrade pip
-# Install python reqirments 
-RUN pip install -r requirments.txt
+# Install python requirements
+RUN pip install -r requirements.txt
 
 
 CMD [ "python", "run.py"]
