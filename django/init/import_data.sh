@@ -1,7 +1,15 @@
 #!/bin/bash 
-echo "Start mySql db migration"
-sleep 10
-mysql -h db -p$MYSQL_ROOT_PASSWORD  < data.sql
-mkdir ./shared
-touch ./shared/migration.done
-echo "migration done";
+DIRECTORY=./shared
+DONE_FILE_NAME=migration.done
+
+if [ !  -d "$DIRECTORY" ]; then
+  echo "create $DIRECTORY "
+  mkdir $DIRECTORY
+fi
+echo "crcheck if $DIRECTORY/$DONE_FILE_NAME  exists "
+if  [ ! -f  $DIRECTORY/$DONE_FILE_NAME ]; then
+    echo "Start mysql db migration"
+    #mysql -h db -p$SQL_ROOT_PASSWORD  < data.sql
+    touch $DIRECTORY/$DONE_FILE_NAME
+fi
+
