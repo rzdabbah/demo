@@ -16,6 +16,9 @@ from .forms import RatingForm
 # Home view to display all movie posters
 def home(request):
     movies = Movie.objects.all()  # Retrieve all movies from the database
+    print('########################################################')
+    print(movies)
+    print('########################################################')
     return render(request, 'movies/home.html', {'movies': movies})
 
 
