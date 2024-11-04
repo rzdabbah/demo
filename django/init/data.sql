@@ -96,14 +96,14 @@ DROP TABLE IF EXISTS `auth_user`;
 CREATE TABLE `auth_user` (
   `id` tinyint(4) DEFAULT NULL,
   `password` varchar(88) DEFAULT NULL,
-  `last_login` varchar(10) DEFAULT NULL,
+  `last_login` DATE DEFAULT NULL,
   `is_superuser` tinyint(4) DEFAULT NULL,
   `username` varchar(6) DEFAULT NULL,
   `last_name` varchar(0) DEFAULT NULL,
   `email` varchar(0) DEFAULT NULL,
   `is_staff` tinyint(4) DEFAULT NULL,
   `is_active` tinyint(4) DEFAULT NULL,
-  `date_joined` varchar(10) DEFAULT NULL,
+  `date_joined` DATE DEFAULT NULL,
   `first_name` varchar(0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -252,7 +252,7 @@ DROP TABLE IF EXISTS `django_session`;
 CREATE TABLE `django_session` (
   `session_key` varchar(32) DEFAULT NULL,
   `session_data` varchar(227) DEFAULT NULL,
-  `expire_date` varchar(10) DEFAULT NULL
+  `expire_date` DATE DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -331,7 +331,7 @@ DROP TABLE IF EXISTS `movies_review`;
 CREATE TABLE `movies_review` (
   `id` tinyint(4) DEFAULT NULL,
   `review_text` varchar(84) DEFAULT NULL,
-  `created_at` varchar(10) DEFAULT NULL,
+  `created_at` DATE DEFAULT NULL,
   `movie_id` tinyint(4) DEFAULT NULL,
   `user_id` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
