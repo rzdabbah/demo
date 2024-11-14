@@ -92,6 +92,8 @@ services:
 
     networks:
       - mongodb_network
+    depends_on:
+      - mongodb
 
   
  
@@ -103,6 +105,7 @@ volumes:
   mongodb-log:
     driver: local
     name: mongo-log
+
 
 networks:
   mongodb_network:

@@ -22,10 +22,6 @@ mongo_db_name = os.environ.get("MONGO_DB_NAME")
 
 db_url = f"mongodb://{mongo_db_user}:{mongo_db_pw}@{mongo_host}:{mongo_port}/\
 {mongo_db_name}?authSource=admin"
-print('******************************************************************')
-print(db_url)
-print('******************************************************************')
-
 # MongoDB connection
 client = MongoClient(db_url)
 db = client['usedcarscatalog']
