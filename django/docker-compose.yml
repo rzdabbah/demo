@@ -1,60 +1,110 @@
 services:
-  db:
-    container_name: mysql-container
-    image: mysql:8.0
-    restart: always
-    command: mysqld --default-authentication-plugin=mysql_native_password
+  # mysql:
+  #   container_name: mysql-container
+  #   image: mysql:8.0
+  #   restart: always
+  #   command: mysqld --default-authentication-plugin=mysql_native_password
+  #   volumes:
+  #     - /tmp/mysql:/usr/lib/mysql
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+  #     - MYSQL_USER=${SQL_USER}
+  #     - MYSQL_PASSWORD=${SQL_PASSWORD}
+  #     - MYSQL_DATABASE=${SQL_DATABASE}
+  #   ports:
+  #     - 3306:3306
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD" ]
+  #     interval: 5s
+  #     timeout: 20s
+  #     retries: 30
+
+   # mysql_init:
+  #   container_name: mysql-init
+  #   build:
+  #     context: ./init
+  #   volumes:
+  #     - /tmp/mysql:/usr/lib/mysql
+  #     - /tmp/shared:/usr/lib/shared
+  #   env_file:
+  #     - .env 
+  #   environment:
+  #     - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+  #     - SQL_HOST=${SQL_HOST}
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  # web:
+  #   container_name: web-container
+  #   build:
+  #     context: ./app
+  #   ports:
+  #     - 8000:8000
+  #   env_file:
+  #     - .env 
+  #   environment:
+  #     - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+  #     - SQL_USER=${SQL_USER}
+  #     - SQL_PASSWORD=${SQL_PASSWORD}
+  #     - SQL_DATABASE=${SQL_DATABASE}
+  #     - SQL_HOST=${SQL_HOST}
+  #     - SQL_ENGINE=${SQL_ENGINE}
+  #     - SQL_PORT=${SQL_PORT}
+   
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
     volumes:
-      - /tmp/mysql:/usr/lib/mysql
+      - mongodb-data:/data/db/
+      - mongodb-log:/var/log/mongodb/
     env_file:
       - .env
     environment:
-      - MYSQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-      - MYSQL_USER=${SQL_USER}
-      - MYSQL_PASSWORD=${SQL_PASSWORD}
-      - MYSQL_DATABASE=${SQL_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+
     ports:
-      - 3306:3306
-    healthcheck:
-      test: ["CMD-SHELL", "exit | mysql -h localhost -P 3306 -u root -p$$MYSQL_ROOT_PASSWORD" ]
-      interval: 5s
-      timeout: 20s
-      retries: 30
-  
-  init:
-    container_name: mysql-init
+      - "27017:27017"
+    networks:
+      - mongodb_network
+
+  mongo_init:
+    container_name: mongo-init
     build:
-      context: ./init
+      context: ./mongo_init
     volumes:
-      - /tmp/mysql:/usr/lib/mysql
       - /tmp/shared:/usr/lib/shared
     env_file:
       - .env 
     environment:
-      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-   
-    depends_on:
-      db:
-        condition: service_healthy
-  web:
-    container_name: web-container
-    build:
-      context: ./app
-    ports:
-      - 8000:8000
-    env_file:
-      - .env 
-    environment:
-      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-      - SQL_USER=${SQL_USER}
-      - SQL_PASSWORD=${SQL_PASSWORD}
-      - SQL_DATABASE=${SQL_DATABASE}
-      - SQL_HOST=${SQL_HOST}
-      - SQL_ENGINE=${SQL_ENGINE}
-      - SQL_PORT=${SQL_PORT}
-   
-    depends_on:
-      db:
-        condition: service_healthy
+      - MONGO_DB_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_DB_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_DB_HOST=${MONGO_DB_HOST}
+      - MONGO_DB_PORT=${MONGO_DB_PORT}
+      - MONGO_DB_NAME=${MONGO_INITDB_DATABASE}
+
+    networks:
+      - mongodb_network
+
+  
+ 
 volumes:
   mysql:
+  mongodb-data:
+    driver: local
+    name: mongo-data
+  mongodb-log:
+    driver: local
+    name: mongo-log
+
+networks:
+  mongodb_network:
+    driver: bridge
+    name: mongo-network
