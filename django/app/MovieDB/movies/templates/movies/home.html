@@ -9,7 +9,7 @@
     {% for movie in movies %}
     <div class="movie-item">
         <a href="{% url 'movie_detail' movie.id %}">
-            <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
+            <img src="{{ movie.poster }}" alt="{{ movie.title }}">
         </a>
         <div class="tooltipss">{{ movie.title }}</div> <!-- Tooltip for each movie -->
     </div>

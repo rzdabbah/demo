@@ -8,7 +8,7 @@ class Movie(models.Model):
     director = models.CharField(max_length=100)
     main_actors = models.CharField(max_length=255)  # Store as comma-separated list
     year_of_release = models.CharField(max_length=4)
-    poster = models.ImageField(upload_to='posters/')
+    poster = models.CharField(max_length=1024) #models.ImageField(upload_to='posters/')
     trailer_url = models.URLField(max_length=500, blank=True, null=True)  # New field
     # New field for average rating
     rating = models.FloatField(default=0.0)
