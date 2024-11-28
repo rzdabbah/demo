@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: guess
-          imagePullPolicy: IfNotPresent
+          image: public.ecr.aws/e7z6l1x3/training:latest
+          imagePullPolicy: Always
           ports:
-            - containerPort: 5000
+            - containerPort: 8000
           env:
           - name: SQL_ROOT_PASSWORD
             valueFrom:
-              secretRef:
+              secretKeyRef:
                 name: mysql.secret
                 key: root_password
           - name: SQL_USER
@@ -51,7 +51,7 @@ spec:
               configMapKeyRef:
                 name: django.config
                 key: SQL_ENGINE
-           - name: SQL_PORT
+          - name: SQL_PORT
             valueFrom:
               configMapKeyRef:
                 name: django.config
