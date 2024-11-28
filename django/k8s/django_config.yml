@@ -9,6 +9,8 @@ data:
         "SQL_HOST":"mysql",
         "SQL_ENGINE":"django.db.backends.mysql",
         "SQL_PORT":"3306",
+        "SQL_USER":"moviesusr",
+        "SQL_PASSWORD":"moviespass",
         "MONGO_INITDB_ROOT_USERNAME":"root",
         "MONGO_INITDB_ROOT_PASSWORD":"Start123",
         "MONGO_INITDB_DATABASE":"init_db",

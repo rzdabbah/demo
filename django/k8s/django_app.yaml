@@ -1,23 +1,74 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django-web
+  name: django-app
   labels:
-    app: django-web
+    app: django-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: django-web
+      app: django-app
   template:
     metadata:
       labels:
-        app: django-web
+        app: django-app
     spec:
       containers:
-      - name: django-web
-        image: public.ecr.aws/e7z6l1x3/training:latest
-        ports:
-        - name: http
-          containerPort: 80
-        
+        - name: django-app
+          image: guess
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+          - name: SQL_ROOT_PASSWORD
+            valueFrom:
+              secretRef:
+                name: mysql.secret
+                key: root_password
+          - name: SQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: SQL_USER
+          - name: SQL_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: SQL_PASSWORD
+          - name: SQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: SQL_DATABASE
+          - name: SQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: MONGO_DB_HOST
+          - name: SQL_ENGINE
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: SQL_ENGINE
+           - name: SQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: django.config
+                key: MONGO_DB_PORT
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-svc
+spec:
+  type: NodePort
+  selector:
+    app: django-app
+  ports:
+    - protocol: TCP
+      nodePort: 30036
+      port: 8000
+      targetPort: 8000
