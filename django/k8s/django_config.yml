@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: django.config
 data:
-  jango.config: |
+  django.config: |
     {
         "SQL_DATABASE":"movies",
         "SQL_HOST":"mysql",
