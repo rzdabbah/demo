@@ -23,20 +23,20 @@ spec:
               name: mysql.secret
               key: root_password
         - name: MYSQL_USER
-            valueFrom: 
-              configMapKeyRef:
-                name: django.config
-                key: SQL_USER
+          valueFrom: 
+            configMapKeyRef:
+              name: django.config
+              key: SQL_USER
         - name: MYSQL_PASSWORD
-            valueFrom: 
-              configMapKeyRef:
-                name: django.config
-                key: SQL_PASSWORD
+          valueFrom: 
+            configMapKeyRef:
+              name: django.config
+              key: SQL_PASSWORD
         - name: MYSQL_DATABASE
-            valueFrom: 
-              configMapKeyRef:
-                name: django.config
-                key: SQL_DATABASE
+          valueFrom: 
+            configMapKeyRef:
+              name: django.config
+              key: SQL_DATABASE
         ports:
         - containerPort: 3306
           name: mysql
