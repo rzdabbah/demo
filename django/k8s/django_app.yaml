@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: public.ecr.aws/e7z6l1x3/training:latest
+          image: public.ecr.aws/e7z6l1x3/django_app:1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
