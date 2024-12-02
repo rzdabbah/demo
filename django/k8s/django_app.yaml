@@ -26,6 +26,36 @@ spec:
               secretKeyRef:
                 name: mysql.secret
                 key: root_password
+          - name: SQL_USER
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_USER
+          - name: SQL_PASSWORD
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_PASSWORD
+          - name: SQL_DATABASE
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_DATABASE
+          - name: SQL_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_HOST
+          - name: SQL_ENGINE
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_ENGINE
+          - name: SQL_PORT
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_PORT
 
 ---
 
