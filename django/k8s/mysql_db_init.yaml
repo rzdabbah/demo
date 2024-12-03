@@ -15,8 +15,8 @@ sspec:
             name: mysql.secret
             key: root_password
       - name: SQL_HOST
-            valueFrom: 
-              configMapKeyRef:
-                name: django.config
-                key: SQL_HOST
+        valueFrom: 
+          configMapKeyRef:
+            name: django.config
+            key: SQL_HOST
     
