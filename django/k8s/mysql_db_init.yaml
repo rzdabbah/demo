@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
   - name: mysqldbinit
-    image: public.ecr.aws/e7z6l1x3/mysql_db_init:1.0
+    image: public.ecr.aws/e7z6l1x3/mysql_db_init:1.1
     env:
       - name: SQL_ROOT_PASSWORD
         valueFrom:
