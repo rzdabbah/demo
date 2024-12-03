@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: pod
+metadata:
+  name: mysql_db_init
+  labels:
+    app: mysql_db_init
+sspec:
+  containers:
+  - name: mysql_db_init
+    image: public.ecr.aws/e7z6l1x3/mysql_db_init:1.0
+    env:
+      - name: SQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql.secret
+            key: root_password
+      - name: SQL_HOST
+            valueFrom: 
+              configMapKeyRef:
+                name: django.config
+                key: SQL_HOST
+    
