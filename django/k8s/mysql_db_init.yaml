@@ -1,12 +1,12 @@
-apiVersion: apps/v1
-kind: pod
+apiVersion: v1
+kind: Pod
 metadata:
-  name: mysql_db_init
+  name: mysqldbinit
   labels:
-    app: mysql_db_init
-sspec:
+    app: mysqldbinit
+spec:
   containers:
-  - name: mysql_db_init
+  - name: mysqldbinit
     image: public.ecr.aws/e7z6l1x3/mysql_db_init:1.0
     env:
       - name: SQL_ROOT_PASSWORD
