@@ -228,7 +228,7 @@ CREATE TABLE `django_migrations` (
   `id` tinyint(4) DEFAULT NULL,
   `app` varchar(12) DEFAULT NULL,
   `name` varchar(54) DEFAULT NULL,
-  `applied` varchar(10) DEFAULT NULL
+  `applied` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
