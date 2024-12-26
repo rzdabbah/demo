@@ -5,7 +5,7 @@ metadata:
   labels:
     app: django-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: django-app
@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: django-app
-          image: public.ecr.aws/e7z6l1x3/django_app:1.1
+          image: public.ecr.aws/e7z6l1x3/django_app:1.0
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            -   
           env:
           - name: SQL_ROOT_PASSWORD
             valueFrom:
