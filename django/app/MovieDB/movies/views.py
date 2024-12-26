@@ -11,19 +11,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login as auth_login, logout
 
 from .forms import RatingForm
+from .movies_data import MoviesMngr
 
-
+moviesMngr = MoviesMngr()
 # Home view to display all movie posters
 def home(request):
-    movies = Movie.objects.all()  # Retrieve all movies from the database
+    movies = moviesMngr.getAllMovies()
+    # Retrieve all movies from the database
     return render(request, 'movies/home.html', {'movies': movies})
 
 
 # Movie detail view to display information about a selected movie
 
 def movie_detail(request, movie_id):
-    movie = get_object_or_404(Movie, id=movie_id)
-
+    movie = moviesMngr.getMovie_by_id(movie_id=movie_id) 
     # Handle POST request for submitting a rating
     if request.method == 'POST':
         form = RatingForm(request.POST)
@@ -33,7 +34,7 @@ def movie_detail(request, movie_id):
             # Ensure the user is authenticated before rating
             if request.user.is_authenticated:
                 # Check if the user has already rated the movie
-                user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
+                #user_rating = Rating.objects.filter(user=request.user, movie=movie).first()
 
                 if user_rating:
                     # Update the existing rating
@@ -46,25 +47,24 @@ def movie_detail(request, movie_id):
                         user=request.user,
                         rating=rating_value,
                     )
-
                 # Redirect after the form submission to avoid resubmitting
-                return redirect('movie_detail', movie_id=movie.id)
+                return redirect('movie_detail', movie_id=movie.movie_id)
 
     else:
         form = RatingForm()
 
     # Calculate the average rating for the movie
-    average_rating = Rating.objects.filter(movie=movie).aggregate(Avg('rating'))['rating__avg'] or 0
+    #average_rating = Rating.objects.filter(movie=movie).aggregate(Avg('rating'))['rating__avg'] or 0
 
     # Get the user's rating for this movie if they are authenticated
-    user_rating = Rating.objects.filter(movie=movie,
-                                        user=request.user).first() if request.user.is_authenticated else None
+    #user_rating = Rating.objects.filter(movie=movie,
+    #                                    user=request.user).first() if request.user.is_authenticated else None
 
     context = {
         'movie': movie,
         'form': form,
-        'average_rating': average_rating,  # Show the correct average rating
-        'user_rating': user_rating,  # Display the user's own rating if available
+        'average_rating': 2,  # Show the correct average rating
+        'user_rating': 3,  # Display the user's own rating if available
     }
 
     return render(request, 'movies/movie_detail.html', context)

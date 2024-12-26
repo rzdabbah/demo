@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home - JMDB: Julian's Movie Database{% endblock %}
+{% block title %}Home - JMDB: Rami's Movie Database{% endblock %}
 
 {% block content %}
 <!-- it is the grid for the home page -->
@@ -8,7 +8,7 @@
 <div class="movie-grid">
     {% for movie in movies %}
     <div class="movie-item">
-        <a href="{% url 'movie_detail' movie.id %}">
+        <a href="{% url 'movie_detail' movie.movie_id %}">
             <img src="{{ movie.poster }}" alt="{{ movie.title }}">
         </a>
         <div class="tooltipss">{{ movie.title }}</div> <!-- Tooltip for each movie -->

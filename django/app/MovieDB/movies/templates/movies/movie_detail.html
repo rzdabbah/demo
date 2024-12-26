@@ -15,7 +15,7 @@
      <!-- Admin Movie Actions -->
     {% if user.is_staff %}
     <div class="admin-actions">
-        <a href="javascript:void(0);" class="btn delete-btn" onclick="openDeleteModal('{% url 'delete_movie' movie.id %}')">Delete Movie</a>
+        <a href="javascript:void(0);" class="btn delete-btn" onclick="openDeleteModal('{% url 'delete_movie' movie.movie_id %}')">Delete Movie</a>
     </div>
     {% endif %}
 
@@ -164,7 +164,7 @@
         <a href="{% url 'add_review' movie.id %}" class="btn">Add a Review</a>
     {% else %}
           <!-- To redirect the user back to the movie detail page after logging in -->
-          <p><a href="{% url 'login' %}?next={% url 'movie_detail' movie.id %}" class="btn">Log in to add a review</a></p>
+          <p><a href="{% url 'login' %}?next={% url 'movie_detail' movie.movie_id %}" class="btn">Log in to add a review</a></p>
     {% endif %}
 
 
