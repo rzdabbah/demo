@@ -12,6 +12,7 @@ pipeline {
   && rm -r docker docker-17.04.0-ce.tgz'
             }
         }
+
         stage('build') {
             steps {
                 sh 'python --version'
