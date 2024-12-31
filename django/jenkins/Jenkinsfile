@@ -6,12 +6,12 @@ pipeline {
     stages {
         stage('build init') {
             steps {
-                sh 'pwd && ls && cd demo/django/init && docker build --tag Django_db_init:latest . '
+                sh 'pwd && ls && cd django/init && docker build --tag Django_db_init:latest . '
             }
         }
         stage('build app') {
             steps {
-                sh 'cd demo/django/app && docker build --tag Django_app:latest . '
+                sh 'cd django/app && docker build --tag Django_app:latest . '
 
             }
         }
