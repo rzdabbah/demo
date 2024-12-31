@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('build init') {
             steps {
-                sh 'cd demo/django/init && docker build --tag Django_db_init:latest . '
+                sh 'pwd && ls && cd demo/django/init && docker build --tag Django_db_init:latest . '
             }
         }
         stage('build app') {
